@@ -32,7 +32,12 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
+        <div className={poppins.className + ' top-bit'}>
+          Fill in the information below to see how much revenue  {<br />}
+          Persifi's outbound service will generate for your {<br />}
 
+          business.
+        </div>
         <div className='main-calc'>
 
           {calcLineTop(firstText)}
@@ -43,7 +48,7 @@ export default function Home() {
 
         <div className='button-holder'>
 
-        {calcButton()}
+          {calcButton()}
 
         </div>
 
@@ -53,7 +58,11 @@ export default function Home() {
 
 
       <div className='lower test' id='lower'>
-        test
+      {calcRoi()}
+      {<br></br>}
+      {calcMRR() + ' MRR'}
+      {<br></br>}
+      {calcLTV() + ' LTV'}
       </div>
     </>
   )
@@ -79,7 +88,8 @@ export default function Home() {
             <div className="input-group-prepend">
               <span className="input-group-text rounded-left" id="deal-size">$</span>
             </div>
-            <input type="text" className="form-control top" placeholder="" aria-label="Username" aria-describedby="deal-size" />
+            <input type="text" className="form-control top" placeholder="" aria-label="Username" aria-describedby="deal-size" 
+            onInput={e => setARRmonthly(e.target.value)}/>
           </div>
         </div>
       </div>
@@ -94,7 +104,8 @@ export default function Home() {
             <label className={poppins.className + ' value-heading'} htmlFor="conversion-rate">{text}</label>
           </div>
           <div className="input-group  col calc-right-side">
-            <input type="text" className="form-control middle" placeholder="" aria-label="Username" aria-describedby="conversion-rate" />
+            <input type="text" className="form-control middle" placeholder="" aria-label="Username" aria-describedby="conversion-rate" 
+            onInput={e => setConvRate(e.target.value)}/>
 
             <div className="input-group-append">
               <span className="input-group-text rounded-right" id="conversion-rate">%</span>
@@ -114,7 +125,8 @@ export default function Home() {
             <label className={poppins.className + ' value-heading'} htmlFor="client-lifetime">{text}</label>
           </div>
           <div className="input-group col calc-right-side">
-            <input type="text" className="form-control bottom" placeholder="" aria-label="Username" aria-describedby="client-lifetime" />
+            <input type="text" className="form-control bottom" placeholder="" aria-label="Username" aria-describedby="client-lifetime" 
+            onInput={e => setLTVinMonths(e.target.value)}/>
 
             <div className="input-group-append">
               <span className="input-group-text rounded-right" id="client-lifetime">months</span>
@@ -130,55 +142,37 @@ export default function Home() {
 
 
   function calcRoi() {
+
     let demosPerMonth = 15;
-    let persifiMonthlyFees = 5000;
-
     let pipelineMonthly = demosPerMonth * ARRmonthly;
-
-
-
-    let expectedRev = pipelineMonthly * convRate;
-
-
-
+    let expectedRev = pipelineMonthly * (convRate * 0.01);
     let roi = expectedRev / 5000;
-    let evOverCustomerLtv = LTVinMonths / expectedRev;
 
-    return roi * 100;
+    return `${roi}% ROI`
   }
 
 
   function calcMRR() {
+
     let demosPerMonth = 15;
-    let persifiMonthlyFees = 5000;
-
     let pipelineMonthly = demosPerMonth * ARRmonthly;
-
-
-
-    let expectedRev = pipelineMonthly * convRate;
-
-
-
-    let roi = expectedRev / 5000;
-    let evOverCustomerLtv = LTVinMonths * expectedRev;
+    let expectedRev = pipelineMonthly * (convRate * 0.01);
+    console.log(convRate)
 
     return expectedRev;
   }
 
   function calcLTV() {
     let demosPerMonth = 15;
-    let persifiMonthlyFees = 5000;
 
     let pipelineMonthly = demosPerMonth * ARRmonthly;
 
 
 
-    let expectedRev = pipelineMonthly * convRate;
+    let expectedRev = pipelineMonthly * (convRate * 0.01);
 
 
 
-    let roi = expectedRev / 5000;
     let evOverCustomerLtv = LTVinMonths * expectedRev;
 
     return evOverCustomerLtv;
