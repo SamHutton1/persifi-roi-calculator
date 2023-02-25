@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Poppins } from '@next/font/google'
 import { useState } from 'react'
+import Link from 'next/link'
 
 const poppins = Poppins({
   weight: '400',
@@ -15,6 +16,10 @@ export default function Home() {
   const [LTVinMonths, setLTVinMonths] = useState(0);
 
 
+  const firstText = `Average deal size (monthly recurring revenue) in AUD`;
+  const secondText = `Average demo to close
+  conversion rate`
+  const thirdText = `Average client lifetime in months`
 
 
   return (
@@ -30,77 +35,98 @@ export default function Home() {
 
         <div className='main-calc'>
 
-
-          <div className='calculator-line'>
-            <div className='row'>
-              <div className='col'>
-
-                <div className={'value-heading ' + poppins.className}>
-                  Average deal size (monthly recurring revenue) in AUD
-
-                </div>
-              </div>
-
-              <div className='col'>
-
-
-                <input className='text-field' type="text" name="name" onInput={e => setARRmonthly(e.target.value)} />
-              </div>
-
-            </div>
-          </div>
-
-          <div className='calculator-line'>
-            <div className='row'>
-              <div className='col'>
-
-                <div className={'value-heading ' + poppins.className}>
-                  Average demo to close
-                  conversion rate
-
-                </div>
-              </div>
-
-              <div className='col '>
-
-
-                <input className='text-field' type="text" name="name" onInput={e => setARRmonthly(e.target.value)} />
-              </div>
-
-            </div>
-          </div>
-
-          <div className='calculator-line'>
-            <div className='row'>
-              <div className='col'>
-
-                <div className={'value-heading ' + poppins.className}>
-                  Average lifetime value of
-                  a client
-
-                </div>
-              </div>
-
-              <div className='col'>
-
-
-                <input className='text-field' type="text" name="name" onInput={e => setARRmonthly(e.target.value)} />
-              </div>
-
-            </div>
-          </div>
-
-
-
-
+          {calcLineTop(firstText)}
+          {calcLineMiddle(secondText)}
+          {calcLineBottom(thirdText)}
 
         </div>
+
+        <div className='button-holder'>
+
+        {calcButton()}
+
+        </div>
+
+
+
       </div>
-      <div className='lower test'>
+
+
+      <div className='lower test' id='lower'>
         test
       </div>
     </>
   )
+
+  function calcButton() {
+    return (
+      <Link href='#lower' scroll={false}>
+        <button className={poppins.className + ' calc-button'}>
+          Calculate
+        </button>
+      </Link>
+    )
+  }
+
+  function calcLineTop(text) {
+    return (
+      <div className='container-top'>
+        <div className='row'>
+          <div className='col mt-3 col-8 calc-left-side'>
+            <label className={poppins.className + ' value-heading'} htmlFor="deal-size">{text}</label>
+          </div>
+          <div className="input-group col calc-right-side">
+            <div className="input-group-prepend">
+              <span className="input-group-text rounded-left" id="deal-size">$</span>
+            </div>
+            <input type="text" className="form-control top" placeholder="" aria-label="Username" aria-describedby="deal-size" />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  function calcLineMiddle(text) {
+    return (
+      <div className='container-middle'>
+        <div className='row mb-3 mt-3'>
+          <div className='col  col-8 calc-left-side'>
+            <label className={poppins.className + ' value-heading'} htmlFor="conversion-rate">{text}</label>
+          </div>
+          <div className="input-group  col calc-right-side">
+            <input type="text" className="form-control middle" placeholder="" aria-label="Username" aria-describedby="conversion-rate" />
+
+            <div className="input-group-append">
+              <span className="input-group-text rounded-right" id="conversion-rate">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  function calcLineBottom(text) {
+    return (
+      <div className='container-bottom'>
+
+        <div className='row  mb-3 mt-3'>
+          <div className='col col-8 calc-left-side'>
+            <label className={poppins.className + ' value-heading'} htmlFor="client-lifetime">{text}</label>
+          </div>
+          <div className="input-group col calc-right-side">
+            <input type="text" className="form-control bottom" placeholder="" aria-label="Username" aria-describedby="client-lifetime" />
+
+            <div className="input-group-append">
+              <span className="input-group-text rounded-right" id="client-lifetime">months</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    )
+  }
+
+
 
 
   function calcRoi() {

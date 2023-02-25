@@ -4,8 +4,27 @@
     width: 100%;
 }
 
+
+.calc-button {
+    font-size: 40px;
+    color: #221c35;
+    background-color: #37cb94;
+    outline: none;
+    border: none;
+    border-radius: 50px;
+    padding: .5rem .75rem;
+    border: 1px solid #37cb94;
+}
+
+.calc-button:hover {
+    color: #37cb94;
+    background-color: #221c35;
+    border: 1px solid #37cb94;
+}
+
 .upper {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -21,8 +40,13 @@
 }
 
 .main-calc {
+    border-radius: 50px;
     background-color: #31a97a;
     color: #221c35;
+}
+
+.calc-left-side {
+    text-align: center;
 }
 
 .text-field {
@@ -33,16 +57,99 @@ input[type="text"],
 textarea {
     background-color: #37cb94;
     border: none;
-    border-radius: 10px;
+    border-radius: 50px;
+    font-size: 40px;
+    padding-left: 1.75rem;
+
 }
 
-input:focus {
+input[type="text"]:focus {
+    box-shadow: none;
+
+    outline-width: 0;
     outline: none;
+    border: none;
+    color: #221c35;
+    background-color: #37cb94;
 }
 
 .value-heading {
     text-align: center;
-    padding-left: 10rem;
-    padding-top: 2rem;
-    font-size: 50px;
-  }
+    font-size: 40px;
+}
+
+.input-group>.form-control {
+    max-width: 300px;
+}
+
+.input-group>.bottom{
+    max-width: 200px;
+}
+
+
+
+.calc-right-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-group-text {
+    font-size: 40px;
+}
+
+.input-group-text{
+    height: 100%;
+    background-color: #37cb94;
+    outline: none;
+    border: none;
+}
+
+
+.input-group {
+    width: 33.333333%;
+}
+
+
+.input-group-text.rounded-right {
+    border-radius: 0 50px 50px 0;
+    padding-right: 1.75rem;
+    padding-left: 1.75rem;
+    line-height: 60px;
+}
+
+.input-group-text.rounded-left {
+    border-radius: 50px 0 0 50px;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+
+}
+
+
+
+.button-holder {
+    padding-top: 20px;
+}
+
+.input-group>.bottom, .input-group>.middle{
+    padding-left: 1.75rem;
+    text-align: right;
+
+}
+
+.input-group>.top{
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.container-top {
+    padding-top: 24px;
+}
+
+.container-middle {
+    padding: 24px 0;
+}
+
+.container-bottom {
+    padding-bottom: 24px;
+}
