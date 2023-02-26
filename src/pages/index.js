@@ -1,9 +1,10 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Poppins } from '@next/font/google'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Confetti from 'react-confetti'
 
 const poppins = Poppins({
   weight: '400',
@@ -19,6 +20,34 @@ export default function Home() {
   const [updatedMRR, setUpdatedMRR] = useState(MRR);
   const [updatedConvRate, setUpdatedConvRate] = useState(convRate);
   const [updatedClientLifeTime, setUpdatedClientLifeTime] = useState(clientLifeTime);
+
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  const [calcPressed, setCalcPressed] = useState(true);
+  const [numberOfPieces, setNumberofPieces] = useState(200)
+
+  useEffect(() => {
+    setWidth(window.innerWidth-20)
+    setHeight(window.innerHeight)
+
+    //after 5 seconds remove all confetti
+    const timeId = setTimeout(() => {
+      setCalcPressed(false)
+    }, 5000)
+
+    //after 3 seconds let it start disappearing
+    const timeIdPieces = setTimeout(() => {
+      setNumberofPieces(0)
+    }, 3000)
+
+    return () => {
+      clearTimeout(timeIdPieces)
+      clearTimeout(timeId)
+    }
+
+
+  }), []
 
 
   const firstText = `Average deal size (monthly recurring revenue) in AUD`;
@@ -71,10 +100,10 @@ export default function Home() {
 
       </div>
 
-
       <div className='lower test' id='result'>
+        {(calcRoi() > 10) && calcPressed ? <Confetti width={width} height={height} numberOfPieces={numberOfPieces}></Confetti> : null}
         <div className={poppins.className + ' top-bit'}>
-          <div className='header'>
+          <div className='header bottom-header'>
             <Image
               src={'/Persifi-logo.png'}
               width={180}
@@ -85,32 +114,38 @@ export default function Home() {
 
         </div>
 
-            <div className='roi-container'>
+        {updatedMRR === 0 ? null : <div className='roi-container'>
 
-            <div className={poppins.className + ' roi-section'}>
-              {calcRoi()}
+          <div className={poppins.className + ' roi-section'}>
+            {`${calcRoi().toLocaleString()} % ROI`}
 
-            </div>
-            </div>
+          </div>
+        </div>}
 
 
-            <div className={poppins.className + ' mrr-and-ltv'}>
-              {`Persifi will generate approximately $${calcMRR()} in monthly recurring revenue, a total of $${calcLTV()} across the customer's LTV`}
 
-            </div>
 
-            <div className='disclaimer'>
-              <p className={poppins.className + ' disclaimer-text'}>Based on 15 demos booked per month,<br/> and a monthly fee of AUD $5000</p>
-              <i className="bi bi-info-circle-fill disclaimer-icon"></i>
-              
-            </div>
+        <div className={poppins.className + ' mrr-and-ltv'}>
+          {updatedMRR === 0 ? `Please fill out the calculator above to see how Persifi can accelerate your revenue growth` : 
+          `Persifi will generate approximately $${calcMRR().toLocaleString()} MRR per month, a total of $${calcLTV().toLocaleString()} revenue based on the average customer's lifetime`}
 
-            <div className='contact-sales'>
-            <Link href='https://www.persifi.com/contact-us/' scroll={false}>
-              <button className='contact-sales-button'>Contact us</button>
-            </Link>
+        </div>
 
-            </div>
+        {updatedMRR === 0 ? null : 
+        <div className='disclaimer'>
+          
+        <p className={poppins.className + ' disclaimer-text'}>Based on 15 demos booked per month,<br /> and a monthly fee of AUD $5,000</p>
+        <i className="bi bi-info-circle-fill disclaimer-icon"></i>
+
+      </div>}
+        
+
+        <div className='contact-sales'>
+          <Link href='https://www.persifi.com/contact-us/' scroll={false}>
+            <button className='contact-sales-button'>Contact us</button>
+          </Link>
+
+        </div>
 
 
 
@@ -123,20 +158,18 @@ export default function Home() {
     setUpdatedMRR(MRR);
     setUpdatedConvRate(convRate);
     setUpdatedClientLifeTime(clientLifeTime);
+    setCalcPressed(true);
+    setNumberofPieces(200);
   }
 
   function handleEnter(input, e) {
-    console.log(input)
     setClientLifeTime(input);
 
-    console.log(e.key)
     if (e.key === 'Enter') {
       handleClick();
-      router.push('#result', undefined, {scroll: false});
+      router.push('/#result', undefined, { scroll: false });
     }
   }
-
-
 
   function calcButton() {
     return (
@@ -198,7 +231,7 @@ export default function Home() {
           </div>
           <div className="input-group col calc-right-side">
             <input type="text" className="form-control bottom" placeholder="" aria-label="Username" aria-describedby="client-lifetime"
-              onKeyUp={e => handleEnter(e.target.value, e)}/>
+              onKeyUp={e => handleEnter(e.target.value, e)} />
 
             <div className="input-group-append">
               <span className="input-group-text rounded-right" id="client-lifetime">months</span>
@@ -210,23 +243,19 @@ export default function Home() {
     )
   }
 
-
-
-
-
   function calcRoi() {
 
     let demosPerMonth = 15;
     let pipelineMonthly = demosPerMonth * updatedMRR;
     let expectedRev = pipelineMonthly * (updatedConvRate * 0.01);
-    let roi = expectedRev / 5000;
+    let roi = (expectedRev - 5000) / 5000;
 
-    return `${roi * 100}% ROI`
+
+    return roi * 100
   }
 
 
   function calcMRR() {
-
     let demosPerMonth = 15;
     let pipelineMonthly = demosPerMonth * updatedMRR;
     let expectedRev = pipelineMonthly * (updatedConvRate * 0.01);
@@ -236,19 +265,10 @@ export default function Home() {
 
   function calcLTV() {
     let demosPerMonth = 15;
-
     let pipelineMonthly = demosPerMonth * updatedMRR;
-
-
-
     let expectedRev = pipelineMonthly * (updatedConvRate * 0.01);
-
-
-
     let evOverCustomerLtv = updatedClientLifeTime * expectedRev;
 
     return evOverCustomerLtv;
   }
-
-
 }
