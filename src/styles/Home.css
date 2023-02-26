@@ -9,10 +9,91 @@
     font-size: 40px;
 }
 
+.header {
+    text-align: left;
+    padding-left: 1rem;
+}
+
+
+
 .test {
     position: relative;
     height: 100vh;
     width: 100%;
+}
+
+.contact-sales-button {
+    margin: 3rem 0;
+    font-size: 50px;
+    color: white;
+    background-color: #221c35;
+    outline: none;
+    border: none;
+    border-radius: 50px;
+    padding: .5rem 1.25rem;
+    border: 1px solid #221c35;
+}
+
+.contact-sales-button:hover {
+    color: #221c35;
+    background-color: #31a97a;
+    border: 1px solid white;
+}
+
+.contact-sales {
+    font-size: 40px;
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    background-color: white;
+    width: 100%;
+}
+
+.roi-container {
+    display: flex;
+    margin-bottom: 100px;
+   
+}
+
+.roi-section {
+    display: inline;
+    background-color: #221c35;
+    color: white;
+    font-size: 120px;
+    padding: 0 10rem;
+    border-radius: 75px;
+}
+
+.mrr-and-ltv {
+    font-size: 50px;
+    color: white;
+    width: 100%;
+    background-color: #221c35;
+    text-align: center;
+    padding: 1rem 6rem;
+}
+
+.disclaimer {
+    padding-top: 1.25rem;
+    font-size: 30px;
+    width: 100%;
+    text-align: right;
+    margin-bottom: 50px
+}
+
+.disclaimer-text {
+    display: inline-block;
+}
+
+
+
+.disclaimer-icon {
+    color: #221c35;
+    font-size: 60px;
+    vertical-align: top;
+    display: inline-block;
+    padding-left: 2rem;
+    padding-right: 1rem;
 }
 
 
@@ -44,6 +125,7 @@
 
 .lower {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -94,7 +176,7 @@ input[type="text"]:focus {
     max-width: 300px;
 }
 
-.input-group>.bottom{
+.input-group>.bottom {
     max-width: 200px;
 }
 
@@ -110,7 +192,7 @@ input[type="text"]:focus {
     font-size: 40px;
 }
 
-.input-group-text{
+.input-group-text {
     height: 100%;
     background-color: #37cb94;
     outline: none;
@@ -143,13 +225,14 @@ input[type="text"]:focus {
     padding-top: 20px;
 }
 
-.input-group>.bottom, .input-group>.middle{
+.input-group>.bottom,
+.input-group>.middle {
     padding-left: 1.75rem;
     text-align: right;
 
 }
 
-.input-group>.top{
+.input-group>.top {
     padding-right: 0;
     padding-left: 0;
 }
