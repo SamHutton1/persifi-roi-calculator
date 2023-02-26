@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Poppins } from '@next/font/google'
 import { useState } from 'react'
 import Link from 'next/link'
+import { publicRuntimeConfig } from 'next.config'
 
 const poppins = Poppins({
   weight: '400',
@@ -37,6 +38,14 @@ export default function Home() {
         </Head>
 
         <div className={poppins.className + ' top-bit'}>
+          <div className='header'>
+            <Image
+              src={'/Persifi-logo.png'}
+              width={180}
+              height={61}
+              alt={'Persifi Logo'}
+            />
+          </div>
           Fill in the information below to see how much revenue  {<br />}
           Persifi's outbound service will generate for your {<br />}
 
@@ -61,42 +70,71 @@ export default function Home() {
       </div>
 
 
-      <div className='lower test' id='lower'>
-      {calcRoi()}
-      {<br></br>}
-      {calcMRR() + ' MRR'}
-      {<br></br>}
-      {calcLTV() + ' LTV'}
+      <div className='lower test' id='result'>
+        <div className={poppins.className + ' top-bit'}>
+          <div className='header'>
+            <Image
+              src={'/Persifi-logo.png'}
+              width={180}
+              height={61}
+              alt={'Persifi Logo'}
+            />
+          </div>
+
+        </div>
+
+            <div className='roi-container'>
+
+            <div className={poppins.className + ' roi-section'}>
+              {calcRoi()}
+
+            </div>
+            </div>
+
+
+            <div className={poppins.className + ' mrr-and-ltv'}>
+              {`Persifi will generate approximately $${calcMRR()} in monthly recurring revenue, a total of $${calcLTV()} across the customer's LTV`}
+
+            </div>
+
+            <div className='disclaimer'>
+              <p className={poppins.className + ' disclaimer-text'}>Based on 15 demos booked per month,<br/> and a monthly fee of AUD $5000</p>
+              <i className="bi bi-info-circle-fill disclaimer-icon"></i>
+              
+            </div>
+
+            <div className='contact-sales'>
+            <Link href='https://www.persifi.com/contact-us/' scroll={false}>
+              <button className='contact-sales-button'>Contact us</button>
+            </Link>
+
+            </div>
+
+
+
+
       </div>
     </>
   )
 
-  function handleClick ()  {
+  function handleClick() {
     setUpdatedMRR(MRR);
     setUpdatedConvRate(convRate);
     setUpdatedClientLifeTime(clientLifeTime);
-
-    returnValues();
   }
 
-  function returnValues() {
-    return(
-      <div>
-        
-      </div>
-    )
-  }
 
 
   function calcButton() {
     return (
-      <Link href='#lower' scroll={false}>
+      <Link href='#result' scroll={false}>
         <button className={poppins.className + ' calc-button'} onClick={handleClick}>
           Calculate
         </button>
       </Link>
     )
   }
+
 
   function calcLineTop(text) {
     return (
@@ -109,8 +147,8 @@ export default function Home() {
             <div className="input-group-prepend">
               <span className="input-group-text rounded-left" id="deal-size">$</span>
             </div>
-            <input type="text" className="form-control top" placeholder="" aria-label="Username" aria-describedby="deal-size" 
-            onInput={e => setMRR(e.target.value)}/>
+            <input type="text" className="form-control top" placeholder="" aria-label="Username" aria-describedby="deal-size"
+              onInput={e => setMRR(e.target.value)} />
           </div>
         </div>
       </div>
@@ -125,8 +163,8 @@ export default function Home() {
             <label className={poppins.className + ' value-heading'} htmlFor="conversion-rate">{text}</label>
           </div>
           <div className="input-group  col calc-right-side">
-            <input type="text" className="form-control middle" placeholder="" aria-label="Username" aria-describedby="conversion-rate" 
-            onInput={e => setConvRate(e.target.value)}/>
+            <input type="text" className="form-control middle" placeholder="" aria-label="Username" aria-describedby="conversion-rate"
+              onInput={e => setConvRate(e.target.value)} />
 
             <div className="input-group-append">
               <span className="input-group-text rounded-right" id="conversion-rate">%</span>
@@ -146,8 +184,8 @@ export default function Home() {
             <label className={poppins.className + ' value-heading'} htmlFor="client-lifetime">{text}</label>
           </div>
           <div className="input-group col calc-right-side">
-            <input type="text" className="form-control bottom" placeholder="" aria-label="Username" aria-describedby="client-lifetime" 
-            onInput={e => setClientLifeTime(e.target.value)}/>
+            <input type="text" className="form-control bottom" placeholder="" aria-label="Username" aria-describedby="client-lifetime"
+              onInput={e => setClientLifeTime(e.target.value)} />
 
             <div className="input-group-append">
               <span className="input-group-text rounded-right" id="client-lifetime">months</span>
@@ -159,7 +197,7 @@ export default function Home() {
     )
   }
 
-  
+
 
 
 
@@ -168,7 +206,6 @@ export default function Home() {
     let demosPerMonth = 15;
     let pipelineMonthly = demosPerMonth * updatedMRR;
     let expectedRev = pipelineMonthly * (updatedConvRate * 0.01);
-    console.log(expectedRev)
     let roi = expectedRev / 5000;
 
     return `${roi * 100}% ROI`
