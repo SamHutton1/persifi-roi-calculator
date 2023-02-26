@@ -1,0 +1,56 @@
+@media(max-width: 1500px) {
+    .roi-section {
+        font-size: 90px;
+    }
+
+    .mrr-and-ltv {
+        font-size: calc(60px * .75);
+    }
+
+    .contact-sales-button {
+        margin: 1rem 0;
+    }
+
+    .disclaimer {
+        font-size: calc(30px * .75);
+    }
+
+    .disclaimer-icon {
+        font-size: calc((30px *.75) * 2);
+    }
+
+    .value-heading {
+        font-size: calc(40px * 0.75);
+    }
+
+    .input-group>.form-control {
+        font-size: calc(40px * 0.75);
+    }
+
+    .input-group-text {
+        font-size: calc(40px * 0.75);
+    }
+
+    .input-group-text.rounded-right {
+        line-height: calc(60px * 0.75);
+    }
+
+    .calc-button {
+        font-size: calc(40px * 0.75);
+    }
+
+    .input-group>.form-control {
+        max-width: calc(300px * 0.75);
+    }
+    
+    .input-group>.bottom {
+        max-width: calc(200px * 0.75);
+    }
+
+    .top-bit {
+        font-size: calc(40px * 0.75);
+    }
+    
+
+    
+}
