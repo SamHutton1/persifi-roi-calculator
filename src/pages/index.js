@@ -36,7 +36,7 @@ export default function Home() {
           <title>Persifi ROI Calculator</title>
           <meta name="description" content="Persifi ROI Calculator" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/favicon.png" />
         </Head>
 
         <div className={poppins.className + ' top-bit'}>
